@@ -30,7 +30,14 @@ export function AppRoutes() {
   const iconSize = sizes[6];
 
   return (
-    <Navigator screenOptions={{ headerShown: false, tabBarShowLabel: false }}>
+    <Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarShowLabel: false,
+        tabBarActiveTintColor: colors.green[500],
+        tabBarInactiveTintColor: colors.gray[200],
+      }}
+    >
       <Screen
         name="home"
         component={Home}
