@@ -7,9 +7,9 @@ export function Home() {
     <VStack flex={1}>
       <HomeHeader />
       <HStack>
-        <Group name="costas" />
-        <Group name="ombro" />
-        <Group name="pernas" />
+        <Group name="costas" isActive />
+        <Group name="ombro" isActive={false} />
+        {/* <Group name="pernas" isActive={true} /> */}
       </HStack>
     </VStack>
   );
