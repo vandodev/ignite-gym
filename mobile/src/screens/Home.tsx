@@ -1,9 +1,10 @@
 import React from "react";
-import { Center, Text } from "native-base";
+import { Center, VStack } from "native-base";
+import { HomeHeader } from "@components/HomeHeader";
 export function Home() {
   return (
-    <Center flex={1}>
-      <Text color={"white"}>Home</Text>
-    </Center>
+    <VStack flex={1}>
+      <HomeHeader />
+    </VStack>
   );
 }
