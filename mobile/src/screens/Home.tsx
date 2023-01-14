@@ -1,8 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import { Center, HStack, VStack, FlatList, Heading, Text } from "native-base";
+
 import { HomeHeader } from "@components/HomeHeader";
 import { Group } from "@components/Group";
+import { ExerciseCard } from "@components/ExerciseCard";
 
 export function Home() {
   const [groupSelected, setGroupSelected] = useState("antebraço");
@@ -45,6 +47,8 @@ export function Home() {
             4
           </Text>
         </HStack>
+        <ExerciseCard />
+        <ExerciseCard />
       </VStack>
     </VStack>
   );
