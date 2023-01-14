@@ -9,14 +9,7 @@ type Props = TouchableOpacityProps & {};
 export function ExerciseCard({ ...rest }: Props) {
   return (
     <TouchableOpacity {...rest}>
-      <HStack
-        bg="gray.500"
-        alignItems="center"
-        p={2}
-        pr={4}
-        rounded="md"
-        mb={3}
-      >
+      <HStack bg="gray.500" alignItems="center" p={2} rounded="md" mb={3}>
         <Image
           source={{
             uri: "http://conteudo.imguol.com.br/c/entretenimento/0c/2019/12/03/remada-unilateral-com-halteres-1575402100538_v2_600x600.jpg",
