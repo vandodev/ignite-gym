@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { TouchableOpacity } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import * as FileSystem from "expo-file-system";
 import {
   Center,
   Text,
@@ -38,7 +39,10 @@ export function Profile() {
       }
 
       if (photoSelected.assets[0].uri) {
-        setUserPhoto(photoSelected.assets[0].uri);
+        const photoInfo = await FileSystem.getInfoAsync(
+          photoSelected.assets[0].uri
+        );
+        console.log(photoInfo);
       }
     } catch (error) {
       console.log(error);
