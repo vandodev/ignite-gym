@@ -1,9 +1,11 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { VStack, Image, Center, Text, Heading, ScrollView } from "native-base";
+import { VStack, Image, Text, Center, Heading, ScrollView } from "native-base";
 import { useForm, Controller } from "react-hook-form";
-import BackgroundImg from "@assets/background.png";
+
 import LogoSvg from "@assets/logo.svg";
+import BackgroundImg from "@assets/background.png";
+
 import { Input } from "@components/Input";
 import { Button } from "@components/Button";
 
@@ -41,7 +43,7 @@ export function SignUp() {
       contentContainerStyle={{ flexGrow: 1 }}
       showsVerticalScrollIndicator={false}
     >
-      <VStack flex={1} px={10}>
+      <VStack flex={1} px={10} pb={16}>
         <Image
           source={BackgroundImg}
           defaultSource={BackgroundImg}
@@ -49,6 +51,7 @@ export function SignUp() {
           resizeMode="contain"
           position="absolute"
         />
+
         <Center my={24}>
           <LogoSvg />
 
@@ -56,6 +59,7 @@ export function SignUp() {
             Treine sua mente e o seu corpo.
           </Text>
         </Center>
+
         <Center>
           <Heading color="gray.100" fontSize="xl" mb={6} fontFamily="heading">
             Crie sua conta
@@ -68,11 +72,14 @@ export function SignUp() {
               required: "Informe o nome.",
             }}
             render={({ field: { onChange, value } }) => (
-              <Input placeholder="Nome" onChangeText={onChange} value={value} />
+              <Input
+                placeholder="Nome"
+                onChangeText={onChange}
+                value={value}
+                errorMessage={errors.name?.message}
+              />
             )}
           />
-
-          <Text color="white">{errors.name?.message}</Text>
 
           <Controller
             control={control}
@@ -91,10 +98,10 @@ export function SignUp() {
                 autoCapitalize="none"
                 onChangeText={onChange}
                 value={value}
+                errorMessage={errors.email?.message}
               />
             )}
           />
-          <Text color="white">{errors.email?.message}</Text>
 
           <Controller
             control={control}
@@ -131,10 +138,10 @@ export function SignUp() {
         </Center>
 
         <Button
-          title="Voltar para login"
-          variant={"outline"}
+          title="Voltar para o login"
+          variant="outline"
+          mt={24}
           onPress={handleGoBack}
-          mt={10}
         />
       </VStack>
     </ScrollView>
