@@ -1,5 +1,6 @@
 import React from "react";
 import { StatusBar } from "react-native";
+import { AuthContext } from "@contexts/AuthContext";
 import { THEME } from "./src/theme";
 import { NativeBaseProvider } from "native-base";
 import {
@@ -22,7 +23,16 @@ export default function App() {
         backgroundColor="transparent"
         translucent
       />
-      {fontsLoaded ? <Routes /> : <Loading />}
+      <AuthContext.Provider
+        value={{
+          id: "1",
+          name: "Rodrigo Gonçalves",
+          email: "rodrigo@email.com",
+          avatar: "rodrigo.png",
+        }}
+      >
+        {fontsLoaded ? <Routes /> : <Loading />}
+      </AuthContext.Provider>
     </NativeBaseProvider>
   );
 }
