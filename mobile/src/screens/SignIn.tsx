@@ -18,7 +18,7 @@ type FormData = {
 };
 
 export function SignIn() {
-  const { setUser } = useAuth();
+  const { singIn } = useAuth();
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
 
   const {
@@ -32,12 +32,7 @@ export function SignIn() {
   }
 
   function handleSignIn({ email, password }: FormData) {
-    setUser({
-      id: "",
-      name: "",
-      email,
-      avatar: "",
-    });
+    singIn(email, password);
   }
 
   return (
