@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigation } from "@react-navigation/native";
 import {
@@ -29,6 +29,7 @@ type FormData = {
 
 export function SignIn() {
   const { singIn } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
 
@@ -44,6 +45,7 @@ export function SignIn() {
 
   async function handleSignIn({ email, password }: FormData) {
     try {
+      setIsLoading(true);
       await singIn(email, password);
     } catch (error) {
       const isAppError = error instanceof AppError;
@@ -57,6 +59,7 @@ export function SignIn() {
         placement: "top",
         bgColor: "red.500",
       });
+      setIsLoading(false);
     }
   }
 
@@ -116,10 +119,15 @@ export function SignIn() {
             )}
           />
 
-          <Button title="Acessar" onPress={handleSubmit(handleSignIn)} />
+          <Button
+            mt={6}
+            title="Acessar"
+            onPress={handleSubmit(handleSignIn)}
+            isLoading={isLoading}
+          />
         </Center>
 
-        <Center mt={24}>
+        <Center mt={20}>
           <Text color="gray.100" fontSize="sm" mb={3} fontFamily="body">
             Ainda não tem acesso?
           </Text>
