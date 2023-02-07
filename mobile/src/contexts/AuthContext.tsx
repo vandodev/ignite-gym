@@ -2,6 +2,8 @@ import React, { createContext, ReactNode, useState } from "react";
 import { api } from "@services/api";
 import { UserDTO } from "@dtos/UserDTO";
 
+import { storageUserSave } from "@storage/storageUser";
+
 export type AuthContextDataProps = {
   user: UserDTO;
   singIn: (email: string, password: string) => Promise<void>;
@@ -24,6 +26,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
       if (data.user) {
         setUser(data.user);
+        storageUserSave(data.user);
       }
     } catch (error) {
       throw error;
