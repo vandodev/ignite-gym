@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import {
@@ -16,6 +16,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { api } from "@services/api";
 import { AppError } from "@utils/AppError";
+import { useAuth } from "@hooks/useAuth";
 
 import LogoSvg from "@assets/logo.svg";
 import BackgroundImg from "@assets/background.png";
@@ -45,6 +46,8 @@ const signUpSchema = yup.object({
 
 export function SignUp() {
   const toast = useToast();
+  const { singIn } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
   const {
     control,
     handleSubmit,
@@ -61,9 +64,11 @@ export function SignUp() {
 
   async function handleSignUp({ name, email, password }: FormDataProps) {
     try {
-      const response = await api.post("/users", { name, email, password });
-      console.log(response.data);
+      setIsLoading(true);
+      await api.post("/users", { name, email, password });
+      await singIn(email, password);
     } catch (error) {
+      setIsLoading(false);
       const isAppError = error instanceof AppError;
 
       const title = isAppError
@@ -166,6 +171,7 @@ export function SignUp() {
           <Button
             title="Criar e acessar"
             onPress={handleSubmit(handleSignUp)}
+            isLoading={isLoading}
           />
         </Center>
 
