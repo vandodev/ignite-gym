@@ -14,6 +14,8 @@ import { HomeHeader } from "@components/HomeHeader";
 import { Group } from "@components/Group";
 import { ExerciseCard } from "@components/ExerciseCard";
 
+import { ExerciseDTO } from "@dtos/ExerciseDTO";
+
 import { AppError } from "@utils/AppError";
 import { api } from "@services/api";
 
@@ -22,7 +24,7 @@ import { AppNavigatorRoutesProps } from "@routes/app.routes";
 export function Home() {
   const [groupSelected, setGroupSelected] = useState("costas");
   const [groups, setGroups] = useState<string[]>([]);
-  const [exercises, setExercises] = useState([]);
+  const [exercises, setExercises] = useState<ExerciseDTO[]>([]);
 
   const toast = useToast();
   const navigation = useNavigation<AppNavigatorRoutesProps>();
@@ -52,7 +54,7 @@ export function Home() {
   async function fecthExercisesByGroup() {
     try {
       const response = await api.get(`/exercises/bygroup/${groupSelected}`);
-      console.log(response.data);
+      setExercises(response.data);
     } catch (error) {
       const isAppError = error instanceof AppError;
       const title = isAppError
@@ -116,7 +118,7 @@ export function Home() {
 
         <FlatList
           data={exercises}
-          keyExtractor={(item) => item}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <ExerciseCard onPress={handleOpenExerciseDetails} />
           )}
