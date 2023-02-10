@@ -5,13 +5,14 @@ import { Heading, VStack, SectionList, Text, useToast } from "native-base";
 
 import { api } from "@services/api";
 import { AppError } from "@utils/AppError";
+import { HistoryByDayDTO } from "@dtos/HistoryByDayDTO";
 
 import { ScreenHeader } from "@components/ScreenHeader";
 import { HistoryCard } from "@components/HistoryCard";
 
 export function History() {
   const [isLoading, setIsLoading] = useState(true);
-  const [exercises, setExercises] = useState([]);
+  const [exercises, setExercises] = useState<HistoryByDayDTO[]>([]);
 
   const toast = useToast();
 
@@ -20,7 +21,7 @@ export function History() {
       setIsLoading(true);
       const response = await api.get("/history");
 
-      console.log(response.data);
+      setExercises(response.data);
     } catch (error) {
       const isAppError = error instanceof AppError;
       const title = isAppError
@@ -48,7 +49,7 @@ export function History() {
       <ScreenHeader title="Histórico" />
       <SectionList
         sections={exercises}
-        keyExtractor={(item) => item}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => <HistoryCard />}
         renderSectionHeader={({ section }) => (
           <Heading
