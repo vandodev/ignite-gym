@@ -39,11 +39,16 @@ const profileSchema = yup.object({
     .min(6, "A senha deve ter pelo menos 6 dígitos.")
     .nullable()
     .transform((value) => (!!value ? value : null)),
-  confirm_password: yup
+  password_confirm: yup
     .string()
     .nullable()
     .transform((value) => (!!value ? value : null))
-    .oneOf([yup.ref("password"), null], "A confirmação de senha não confere."),
+    .oneOf([yup.ref("password"), null], "As senhas devem ser iguais.")
+    .when("password", {
+      is: (Field: any) => Field,
+      then: (schema) =>
+        schema.nullable().required("Informe a confirmação da senha."),
+    }),
 });
 
 export function Profile() {
