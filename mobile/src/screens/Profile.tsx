@@ -32,22 +32,25 @@ type FormDataProps = {
   confirm_password: string;
 };
 
-const profileSchema = yup.object({
+const profileSchema = yup.object().shape({
   name: yup.string().required("Informe o nome"),
   password: yup
     .string()
     .min(6, "A senha deve ter pelo menos 6 dígitos.")
     .nullable()
     .transform((value) => (!!value ? value : null)),
-  password_confirm: yup
+  confirm_password: yup
     .string()
     .nullable()
     .transform((value) => (!!value ? value : null))
-    .oneOf([yup.ref("password"), null], "As senhas devem ser iguais.")
+    .oneOf([yup.ref("password"), null], "A confirmação de senha não confere.")
     .when("password", {
-      is: (Field: any) => Field,
+      is: (val: string) => val,
       then: (schema) =>
-        schema.nullable().required("Informe a confirmação da senha."),
+        schema
+          .nullable()
+          .transform((value) => (value === "" ? null : value))
+          .required("Informe a confirmação da senha"),
     }),
 });
 
@@ -91,7 +94,8 @@ export function Profile() {
         const photoInfo = await FileSystem.getInfoAsync(
           photoSelected.assets[0].uri
         );
-        // console.log(photoInfo);
+
+        console.log(photoInfo.uri);
         if (photoInfo.size && photoInfo.size / 1024 / 1024 > 5) {
           return toast.show({
             title: "Essa imagem é muito grande. Escolha uma de até 5MB.",
