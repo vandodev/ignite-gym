@@ -26,6 +26,8 @@ import { Button } from "@components/Button";
 
 import { useAuth } from "@hooks/useAuth";
 
+import defaulUserPhotoImg from "@assets/userPhotoDefault.png";
+
 const PHOTO_SIZE = 33;
 
 type FormDataProps = {
@@ -61,7 +63,6 @@ const profileSchema = yup.object().shape({
 export function Profile() {
   const [isUpdating, setIsUpdating] = useState(false);
   const [photoIsLoading, setPhotoIsLoading] = useState(false);
-  const [userPhoto, setUserPhoto] = useState("https://github.com/vandodev.png");
 
   const toast = useToast();
 
@@ -200,7 +201,11 @@ export function Profile() {
             />
           ) : (
             <UserPhoto
-              source={{ uri: userPhoto }}
+              source={
+                user.avatar
+                  ? { uri: `${api.defaults.baseURL}/avatar/${user.avatar}` }
+                  : defaulUserPhotoImg
+              }
               alt="Foto do usuário"
               size={PHOTO_SIZE}
             />
