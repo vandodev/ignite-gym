@@ -12,9 +12,19 @@ const api = axios.create({
 })as APIInstanceProps;
 
 api.registerInterceptTokenManager = singOut => {
-  const interceptTokenManager = api.interceptors.response.use((response) => response, requestError => {
+const interceptTokenManager = api.interceptors.response.use((response) => response, requestError => {
     if(requestError.response?.status === 401) {
+      if(requestError.response.data?.message === 'token.expired' || requestError.response.data?.message === 'token.invalid') {
+
+      }
+
+      singOut();
+
+    }
+
+    if(requestError.response && requestError.response.data) {
       return Promise.reject(new AppError(requestError.response.data.message))
+
     } else {
       return Promise.reject(requestError)
     }
