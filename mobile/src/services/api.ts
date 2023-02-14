@@ -12,11 +12,11 @@ const api = axios.create({
 })as APIInstanceProps;
 
 api.registerInterceptTokenManager = singOut => {
-  const interceptTokenManager = api.interceptors.response.use((response) => response, (error) => {
-    if(error.response && error.response.data) {
-      return Promise.reject(new AppError(error.response.data.message))
+  const interceptTokenManager = api.interceptors.response.use((response) => response, requestError => {
+    if(requestError.response?.status === 401) {
+      return Promise.reject(new AppError(requestError.response.data.message))
     } else {
-      return Promise.reject(error)
+      return Promise.reject(requestError)
     }
   });
 
