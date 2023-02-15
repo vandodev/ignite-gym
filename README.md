@@ -38,3 +38,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 ## 💻 Projeto
 
 O Ignite Gym é um app para academia para registrar as atividades físicas, foi desenvolvido com expo e se conecta a uma api e seus dados são registrados em um banco sqLite
+
+## 🎨 Layout
+
+O layout da aplicação **Ignite Gym** foi desenvolvido no [**Figma**](https://www.figma.com) pela equipe da **Rocketseat** , Você pode acessar o layout através deste link: [**Ignite Gym**](https://www.figma.com/file/ei00iY5OwDMXzDAYvwKs0V).
